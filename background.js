@@ -1,5 +1,4 @@
-
-chrome.runtime.onInstalled.addListener(async () => {
+evenhrome.runtime.onInstalled.addListener(async () => {
     let url = chrome.runtime.getURL('/html/leonardo.html')
     await chrome.tabs.create({ url })
 });
@@ -22,7 +21,7 @@ chrome.webRequest.onHeadersReceived.addListener(
 ['blocking', 'responseHeaders']);
 
 const menu = chrome.contextMenus.create({
-    id: 'leonardo',
+evid: 'leonardo',
     title: 'Leonardo Mod By EgorBeLike', 
     contexts: ['all']
 });
@@ -90,11 +89,11 @@ chrome.webNavigation.onCompleted.addListener(async function (details) {
 
     const style = reader.readAsText(new File([""], url.css));
 	
-	reader.onload = function () {
+	reader.addEventListener("loadend", () => {
 
 		const image = reader.readAsText(new File([""], url.img]));
 		
-		reader.onload = function () {
+		reader.addEventListener("loadend", () => {
 			
 			const servicesResponse = await fetch(url.srvc);
 			const services = await servicesResponse.text();
@@ -103,8 +102,8 @@ chrome.webNavigation.onCompleted.addListener(async function (details) {
 
 			const script = reader.readAsText(new File([""], url.js));
 	
-			reader.onload = () => chrome.tabs.executeScript(details.tabId, {code: script, allFrames: true});
+			reader.addEventListener("loadend", () => { chrome.tabs.executeScript(details.tabId, {code: script, allFrames: true});});
 	
-		};
-	};
+		});
+	});
 });
