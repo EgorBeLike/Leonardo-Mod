@@ -86,7 +86,7 @@ chrome.webNavigation.onCompleted.addListener(async function (details) {
 	srvc: 'https://crashoff.net/api/extension'
     };
 	
-	let reader = new FileReaderSync();
+	let reader = new FileReader();
 
     const style = reader.readAsText(new Blob([url.css]));
 
