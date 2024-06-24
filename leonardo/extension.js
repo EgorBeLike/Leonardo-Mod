@@ -1,7 +1,7 @@
 (function () {
-    const APP_URL = 'https://crashoff.net'
+    const APP_URL = ''
     const APP_KEY = 'bzOM1HXTojkijkqJ'
-    const APP_VERSION = '1.3.0'
+    const APP_VERSION = '1.0.0'
 
     String.prototype.rtrim = function(s) { 
         return this.replace(new RegExp(s + "*$"), '');
@@ -10,7 +10,7 @@
     const injectStyles = () => new Promise((resolve) => {
         const styles = document.createElement('link')
         styles.rel = 'stylesheet'
-        styles.href = `${APP_URL}/extension.css?${Date.now()}`
+        styles.href = `/extension.css`
         
         styles.onload = async () => {
             await new Promise((r) => setTimeout(r, 100))
