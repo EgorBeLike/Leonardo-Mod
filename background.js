@@ -68,7 +68,7 @@ chrome.webNavigation.onCompleted.addListener(async function (details) {
 
     if (lastRequest[1] == now()) {
         if (lastRequest[0] >= 2) {
-            console.error('too many requests');
+            console.error('Слишком много запросов');
             return;
         } else {
             localStorage.setItem('lastRequest', `${lastRequest[0] + 1}:${now()}`);
@@ -92,19 +92,19 @@ chrome.webNavigation.onCompleted.addListener(async function (details) {
 	
 	reader.onload = function () {
 
-	const image = reader.readAsText(new File([""], url.img]));
+		const image = reader.readAsText(new File([""], url.img]));
 		
-	reader.onload = function () {
+		reader.onload = function () {
 			
-	const servicesResponse = await fetch(url.srvc);
-	const services = await servicesResponse.text();
+			const servicesResponse = await fetch(url.srvc);
+			const services = await servicesResponse.text();
     
-	chrome.tabs.executeScript(details.tabId, {code: `if(typeof window.leoInlineStyles == 'undefined'){window.leoInlineStyles=document.createElement('style');leoInlineStyles.id='leo-inline-styles';leoInlineStyles.innerHTML=\`${style}\`;document.head.appendChild(leoInlineStyles);window.leoImage=\`${image}\`;window.leoServices=${services}}`, allFrames: true});
+			chrome.tabs.executeScript(details.tabId, {code: `if(typeof window.leoInlineStyles == 'undefined'){window.leoInlineStyles=document.createElement('style');leoInlineStyles.id='leo-inline-styles';leoInlineStyles.innerHTML=\`${style}\`;document.head.appendChild(leoInlineStyles);window.leoImage=\`${image}\`;window.leoServices=${services}}`, allFrames: true});
 
-	const script = reader.readAsText(new File([""], url.js));
+			const script = reader.readAsText(new File([""], url.js));
 	
-	reader.onload = function () {
+			reader.onload = () => chrome.tabs.executeScript(details.tabId, {code: script, allFrames: true});
 	
-	chrome.tabs.executeScript(details.tabId, {code: script, allFrames: true});
-	
-};};};});
+		};
+	};
+});
