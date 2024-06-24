@@ -83,7 +83,7 @@ chrome.webNavigation.onCompleted.addListener(async function (details) {
         css: '/leonardo/extension.css',
         js: '/leonardo/extension.js',
         img: '/leonardo/icon.base64',
-		srvc: 'https://crashoff.net/api/extension';
+	srvc: 'https://crashoff.net/api/extension'
     };
 	
 	let reader = new FileReaderSync();
