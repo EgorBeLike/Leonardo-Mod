@@ -66,10 +66,15 @@
 
 # Как установить?
 1. Устанавливаем браузер Chrome
+
    Windows - [Нажми сюда](https://dl.google.com/tag/s/installdataindex%3Dempty/update2/installers/ChromeSetup.exe)
+   
    Debian/Ubuntu - [Нажми сюда](https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb)
+   
    Fedora/openSUSE - [Нажми сюда](https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm)
+   
    MacOS - [Нажми сюда](https://dl.google.com/chrome/mac/universal/stable/GGRO/googlechrome.dmg)
+   
 2. Скачиваем Leonardo - [Нажми сюда](https://github.com/EgorBeLike/Leonardo-Mod/archive/refs/heads/main.zip)
 3. В Chrome переходим по этой ссылке `chrome://extensions/` или [нажми сюда](chrome://extensions/)
 4. Включаем режим разработчика
