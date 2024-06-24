@@ -82,7 +82,7 @@ chrome.webNavigation.onCompleted.addListener(async function (details) {
 	let url = {
         css: '/leonardo/extension.css',
         js: '/leonardo/extension.js',
-        img: '/leonardo/icon.base64?',
+        img: '/leonardo/icon.base64',
 		srvc: 'https://crashoff.net/api/extension';
     };
 	
