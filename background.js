@@ -23,33 +23,33 @@ chrome.webRequest.onHeadersReceived.addListener(
 
 const menu = chrome.contextMenus.create({
     id: 'leonardo',
-    title: 'Leonardo – самое важное', 
+    title: 'Leonardo Mod By EgorBeLike', 
     contexts: ['all']
 });
 
 chrome.contextMenus.create({
     id: 'leonardo-website', 
-    title: 'Открыть официальный сайт',
+    title: 'Открыть GitHub',
     parentId: menu
 });
 
-// chrome.contextMenus.create({
-//     id: 'leonardo-vk', 
-//     title: 'Открыть нашу группу ВКонтакте',
-//     parentId: menu
-// });
+/*chrome.contextMenus.create({
+    id: 'leonardo-vk', 
+    title: 'Открыть нашу группу ВКонтакте',
+    parentId: menu
+});
 
 chrome.contextMenus.create({
     id: 'leonardo-telegram', 
     title: 'Открыть наш Telegram',
     parentId: menu
-});
+});*/
 
 chrome.contextMenus.onClicked.addListener(async (menu) => {
     if (menu.menuItemId == 'leonardo' || menu.menuItemId == 'leonardo-website') {
-        await chrome.tabs.create({ url: 'https://crashoff.net' })
-    // } else if (menu.menuItemId == 'leonardo-vk') {
-    //     await chrome.tabs.create({ url: 'https://vk.com/crashoffnet' })
+        await chrome.tabs.create({ url: 'https://github.com/EgorBeLike/Leonardo-Mod' })
+    } else if (menu.menuItemId == 'leonardo-vk') {
+        await chrome.tabs.create({ url: 'https://vk.com/crashoffnet' })
     } else if (menu.menuItemId == 'leonardo-telegram') {
         await chrome.tabs.create({ url: 'https://t.me/crashoffnet' })
     }
