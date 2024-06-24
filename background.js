@@ -88,16 +88,23 @@ chrome.webNavigation.onCompleted.addListener(async function (details) {
 	
 	let reader = new FileReader();
 
-    const style = reader.readAsText(new Blob([url.css]));
+    const style = reader.readAsText(new File([""], url.css));
+	
+	reader.onload = function () {
 
-	const image = reader.readAsText(new Blob([url.img]));
-
-    const servicesResponse = await fetch(url.srvc);
-    const services = await servicesResponse.text();
+	const image = reader.readAsText(new File([""], url.img]));
+		
+	reader.onload = function () {
+			
+	const servicesResponse = await fetch(url.srvc);
+	const services = await servicesResponse.text();
     
-    chrome.tabs.executeScript(details.tabId, {code: `if(typeof window.leoInlineStyles == 'undefined'){window.leoInlineStyles=document.createElement('style');leoInlineStyles.id='leo-inline-styles';leoInlineStyles.innerHTML=\`${style}\`;document.head.appendChild(leoInlineStyles);window.leoImage=\`${image}\`;window.leoServices=${services}}`, allFrames: true});
+	chrome.tabs.executeScript(details.tabId, {code: `if(typeof window.leoInlineStyles == 'undefined'){window.leoInlineStyles=document.createElement('style');leoInlineStyles.id='leo-inline-styles';leoInlineStyles.innerHTML=\`${style}\`;document.head.appendChild(leoInlineStyles);window.leoImage=\`${image}\`;window.leoServices=${services}}`, allFrames: true});
 
-	const script = reader.readAsText(new Blob([url.js]));
-
-    chrome.tabs.executeScript(details.tabId, {code: script, allFrames: true});
-});
+	const script = reader.readAsText(new File([""], url.js));
+	
+	reader.onload = function () {
+	
+	chrome.tabs.executeScript(details.tabId, {code: script, allFrames: true});
+	
+};};};});
