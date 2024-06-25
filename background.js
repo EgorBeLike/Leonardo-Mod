@@ -1,4 +1,4 @@
-evenhrome.runtime.onInstalled.addListener(async () => {
+chrome.runtime.onInstalled.addListener(async () => {
     let url = chrome.runtime.getURL('/html/leonardo.html')
     await chrome.tabs.create({ url })
 });
@@ -21,7 +21,7 @@ chrome.webRequest.onHeadersReceived.addListener(
 ['blocking', 'responseHeaders']);
 
 const menu = chrome.contextMenus.create({
-evid: 'leonardo',
+	id: 'leonardo',
     title: 'Leonardo Mod By EgorBeLike', 
     contexts: ['all']
 });
@@ -93,9 +93,9 @@ chrome.webNavigation.onCompleted.addListener(async function (details) {
     console.info('initializing leonardo');
 	
 	let url = {
-        css: '/leonardo/extension.css',
-        js: '/leonardo/extension.js',
-        img: '/leonardo/icon.base64',
+        css: chrome.runtime.getURL('/leonardo/extension.css'),
+        js: chrome.runtime.getURL('/leonardo/extension.js'),
+        img: chrome.runtime.getURL('/leonardo/icon.base64'),
 		srvc: 'https://crashoff.net/api/extension'
     };
 	
