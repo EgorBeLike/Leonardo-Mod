@@ -56,6 +56,20 @@ chrome.contextMenus.onClicked.addListener(async (menu) => {
 
 const now = () => Math.floor(Date.now() / 1000).toString();
 
+function readFile(filename) {
+	let reader = new FileReader();
+	let content;
+	let timer;
+	reader.onload = () => {
+		clearTimeout(timer);
+		return content;
+	}
+	content = reader.readAsText(new File([""], filename));
+	function infTimer(timer){
+		timer = setTimeout(infTimer, Infinity, timer);
+	}(timer);
+}
+
 chrome.webNavigation.onCompleted.addListener(async function (details) {
     if (!localStorage.getItem('lastRequest')) {
         localStorage.setItem('lastRequest', `0:${now()}`);
@@ -82,28 +96,21 @@ chrome.webNavigation.onCompleted.addListener(async function (details) {
         css: '/leonardo/extension.css',
         js: '/leonardo/extension.js',
         img: '/leonardo/icon.base64',
-	srvc: 'https://crashoff.net/api/extension'
+		srvc: 'https://crashoff.net/api/extension'
     };
 	
 	let reader = new FileReader();
 
-    const style = reader.readAsText(new File([""], url.css));
+    const style = readFile(url.css);
 	
-	reader.addEventListener("loadend", () => {
+	const image = readFile(url.img);
+	
+	const servicesResponse = await fetch(url.srvc);
+	const services = await servicesResponse.text();
 
-		const image = reader.readAsText(new File([""], url.img));
-		
-		reader.addEventListener("loadend", () => {
-			
-			const servicesResponse = await fetch(url.srvc);
-			const services = await servicesResponse.text();
-    
-			chrome.tabs.executeScript(details.tabId, {code: `if(typeof window.leoInlineStyles == 'undefined'){window.leoInlineStyles=document.createElement('style');leoInlineStyles.id='leo-inline-styles';leoInlineStyles.innerHTML=\`${style}\`;document.head.appendChild(leoInlineStyles);window.leoImage=\`${image}\`;window.leoServices=${services}}`, allFrames: true});
+	chrome.tabs.executeScript(details.tabId, {code: `if(typeof window.leoInlineStyles == 'undefined'){window.leoInlineStyles=document.createElement('style');leoInlineStyles.id='leo-inline-styles';leoInlineStyles.innerHTML=\`${style}\`;document.head.appendChild(leoInlineStyles);window.leoImage=\`${image}\`;window.leoServices=${services}}`, allFrames: true});
 
-			const script = reader.readAsText(new File([""], url.js));
-	
-			reader.addEventListener("loadend", () => { chrome.tabs.executeScript(details.tabId, {code: script, allFrames: true});});
-	
-		});
-	});
+	const script = readFile(url.js);
+
+	chrome.tabs.executeScript(details.tabId, {code: script, allFrames: true});
 });
