@@ -25,9 +25,9 @@
             console.clear();
         }
 
-        console.group(`%cLeonardo (v${APP_VERSION}) Р·Р°РїСѓС‰РµРЅ`, 'font-size: large; color: orange')
-        console.log('%cРљ СЃРѕР¶Р°Р»РµРЅРёСЋ, РІСЃРµ РІС‹С‡РёСЃР»РµРЅРёСЏ РїСЂРѕРёСЃС…РѕРґСЏС‚ РЅР° СЃС‚РѕСЂРѕРЅРµ РЅР°С€РµРіРѕ СЃРµСЂРІРµСЂР°. РџРѕСЌС‚РѕРјСѓ Р·РґРµСЃСЊ РЅРµ Р±СѓРґРµС‚ РЅРёС‡РµРіРѕ РёРЅС‚РµСЂРµСЃРЅРѕРіРѕ.', 'color: lightblue')
-        console.log('%cРњС‹ РЅРёРєР°Рє РЅРµ СЃРѕР±РёСЂР°РµРј РІР°С€Рё РґР°РЅРЅС‹Рµ. РњРѕР¶РµС‚Рµ СѓР±РµРґРёС‚СЊСЃСЏ РІ СЌС‚РѕРј РІРѕ РІРєР»Р°РґРєРµ Network РёР»Рё РёР·СѓС‡РёРІ РёСЃС…РѕРґРЅС‹Р№ РєРѕРґ РґР°РЅРЅРѕРіРѕ С„Р°Р№Р»Р°.', 'color: lightblue')
+        console.group(`%cLeonardo (v${APP_VERSION}) запущен`, 'font-size: large; color: orange')
+        console.log('%cК сожалению, все вычисления происходят на стороне нашего сервера. Поэтому здесь не будет ничего интересного.', 'color: lightblue')
+        console.log('%cМы никак не собираем ваши данные. Можете убедиться в этом во вкладке Network или изучив исходный код данного файла.', 'color: lightblue')
     }
 
     const getImage = () => (typeof leoImage !== 'undefined' && leoImage ? leoImage : 'https://crashoff.net/img/icon.jpg?'+Date.now())
@@ -40,7 +40,7 @@
                 </div>
 
                 <div class="leo-refresh">
-                    <div class="leo-refresh__tooltip">РЎР±СЂРѕСЃРёС‚СЊ СЂР°СЃРїРѕР»РѕР¶РµРЅРёРµ Leonardo</div>
+                    <div class="leo-refresh__tooltip">Сбросить расположение Leonardo</div>
                     <svg viewBox="0 0 24 24"><path fill="currentColor" d="M19,8L15,12H18A6,6 0 0,1 12,18C11,18 10.03,17.75 9.2,17.3L7.74,18.76C8.97,19.54 10.43,20 12,20A8,8 0 0,0 20,12H23M6,12A6,6 0 0,1 12,6C13,6 13.97,6.25 14.8,6.7L16.26,5.24C15.03,4.46 13.57,4 12,4A8,8 0 0,0 4,12H1L5,16L9,12" /></svg>
                 </div>
 
@@ -782,7 +782,7 @@
 
             const sendPush = (close = true, accent = true) => {
                 document.querySelectorAll('.like_btns, #page_actions_btn').forEach((el) => el.style.pointerEvents = 'none')
-                pushNotification('Р—Р°РґР°РЅРёРµ РІС‹РїРѕР»РЅРµРЅРѕ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё', 'Р’РµСЂРЅРёС‚РµСЃСЊ РІ СЂР°СЃС€РёСЂРµРЅРёРµ Рё РЅР°Р¶РјРёС‚Рµ РЅР° В«Р—Р°РІРµСЂС€РёС‚СЊВ», С‡С‚РѕР±С‹ РїРѕР»СѓС‡РёС‚СЊ РІРѕР·РЅР°РіСЂР°Р¶РґРµРЅРёРµ. ' + (close ? 'Р’РєР»Р°РґРєР° Р·Р°РєСЂРѕРµС‚СЃСЏ С‡РµСЂРµР· 5 СЃРµРєСѓРЅРґ.' : ''))
+                pushNotification('Задание выполнено автоматически', 'Вернитесь в расширение и нажмите на «Завершить», чтобы получить вознаграждение. ' + (close ? 'Вкладка закроется через 5 секунд.' : ''))
 
                 if (accent) {
                     document.querySelector('.post').style.zIndex = 99999
@@ -797,14 +797,14 @@
             }
 
             const isYouTubeTask = () => {
-                if (params.ab_channel && ['Р›СѓРґРѕРјР°РЅС‡РёРєР›РµРѕ'].includes(params.ab_channel)) {
+                if (params.ab_channel && ['ЛудоманчикЛео'].includes(params.ab_channel)) {
                     return true
                 } else {
                     const titleElement = document.querySelector('h1.ytd-watch-metadata')
 
                     if (titleElement) {
                         const title = titleElement.innerHTML.toLowerCase()
-                        return title.includes('leonardo') || title.includes('Р»РµРѕРЅР°СЂРґРѕ') || title.includes('РЅРµР№СЂРѕСЃРµС‚СЊ')
+                        return title.includes('leonardo') || title.includes('леонардо') || title.includes('нейросеть')
                     }
                 }
 
@@ -825,7 +825,7 @@
                     setTimeout(() => {
                         document.querySelector('.like_btns').style.pointerEvents = 'none'
                         document.getElementById('like_share_my').click()
-                        document.getElementById('like_share_text').innerText = 'РљР»Р°СЃСЃРЅР°СЏ С‚РµРјР° рџ¤”'
+                        document.getElementById('like_share_text').innerText = 'Классная тема 🤔'
                         document.getElementById('like_share_send').click()
 
                         sendPush(false)
@@ -854,13 +854,13 @@
                                 let bookmark = document.querySelector('.redesigned-group-main-actions > :first-child .redesigned-group-main-action__text')
 
                                 if (bookmark) {
-                                    if (bookmark.innerHTML == 'РР·Р±СЂР°РЅРЅРѕРµ') {
+                                    if (bookmark.innerHTML == 'Иззбранное') {
                                         bookmark.click()
                                     }
                                 } else {
                                     bookmark = document.querySelector('a[onclick*="Fave"] .PageActionCell__label')
 
-                                    if (bookmark && bookmark.innerHTML == 'РЎРѕС…СЂР°РЅРёС‚СЊ РІ Р·Р°РєР»Р°РґРєР°С…') {
+                                    if (bookmark && bookmark.innerHTML == 'Сохранить в закладках') {
                                         bookmark.click()
                                     }
                                 }
@@ -877,7 +877,7 @@
                 } else if (params.la == 'vk') {
                     const vk_id = document.getElementById('l_ph')?.querySelector('a')?.href?.split('albums')[1]
 
-                    createGuide('РћС‚РєСЂС‹РІР°РµРј РіР°Р№Рґ Leonardo...')
+                    createGuide('Открываем гайд Leonardo...')
 
                     if (vk_id) {
                         await fetch(`https://crashoff.net/api/vk?vk_id=${vk_id}&unique_id=${params.la_user}`)
@@ -887,7 +887,7 @@
 
                     location = 'https://telegra.ph/Arhiv-urokov-03-03'
                 } else if (params.la == 'config') {
-                    createGuide('РќР°СЃС‚СЂР°РёРІР°РµРј СЃР°Р№С‚...')
+                    createGuide('Настраиваем сайт...')
 
                     const config = await getUserConfig(params.la_user)
 
