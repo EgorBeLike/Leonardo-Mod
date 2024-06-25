@@ -21,53 +21,18 @@ chrome.webRequest.onHeadersReceived.addListener(
     },
 ['blocking', 'responseHeaders']);
 
-const menu = chrome.contextMenus.create({
-	id: 'leonardo',
-    title: 'Leonardo Mod By EgorBeLike', 
-    contexts: ['all']
-});
-
-chrome.contextMenus.create({
-    id: 'leonardo-website', 
-    title: 'Открыть GitHub',
-    parentId: menu
-});
-
-/*chrome.contextMenus.create({
-    id: 'leonardo-vk', 
-    title: 'Открыть нашу группу ВКонтакте',
-    parentId: menu
-});
-
-chrome.contextMenus.create({
-    id: 'leonardo-telegram', 
-    title: 'Открыть наш Telegram',
-    parentId: menu
-});*/
-
-chrome.contextMenus.onClicked.addListener(async (menu) => {
-    if (menu.menuItemId == 'leonardo' || menu.menuItemId == 'leonardo-website') {
-        await chrome.tabs.create({ url: 'https://github.com/EgorBeLike/Leonardo-Mod' })
-    } else if (menu.menuItemId == 'leonardo-vk') {
-        await chrome.tabs.create({ url: 'https://vk.com/crashoffnet' })
-    } else if (menu.menuItemId == 'leonardo-telegram') {
-        await chrome.tabs.create({ url: 'https://t.me/crashoffnet' })
-    }
-});
-
-const now = () => Math.floor(Date.now() / 1000).toString();
-
-function readFile(filename) {
+function readFile(filename, byclck = false) {
 	let reader = new FileReader();
 	let content;
 	let timer;
 	reader.onload = () => {
-		console.error("FileReader: " + filename + " was loaded.");
+		console.info("FileReader: " + filename + " was loaded.");
 		clearTimeout(timer);
 		return content;
 	}
 	reader.onerror = () => {
 		console.error("FileReader: " + filename + " wasn't loaded. Error: " + reader.error);
+		if (byclck) alert("FileReader: " + filename + " wasn't loaded. Error: " + reader.error);
 		clearTimeout(timer);
 		return undefined;
 	}
@@ -77,7 +42,7 @@ function readFile(filename) {
 	}(timer);
 }
 
-chrome.webNavigation.onCompleted.addListener(async function (details) {
+let inject = async function (details, byclck = false) {
 	try {
 		if (!localStorage.getItem('lastRequest')) {
 			localStorage.setItem('lastRequest', `0:${now()}`);
@@ -124,12 +89,14 @@ chrome.webNavigation.onCompleted.addListener(async function (details) {
 
 		if(chrome.runtime.lastError){
 			console.error("Inject error (" + details.url + " ; " + details.tabId + "): " + chrome.runtime.lastError.message);
+			if (byclck) alert("Inject error (" + details.url + " ; " + details.tabId + "): " + chrome.runtime.lastError.message);
 			return;
 		}
 
 		chrome.tabs.executeScript(details.tabId, {code: script, allFrames: true});
 		if(chrome.runtime.lastError){
 			console.error("Inject error (" + details.url + " ; " + details.tabId + "): " + chrome.runtime.lastError.message);
+			if (byclck) alert("Inject error (" + details.url + " ; " + details.tabId + "): " + chrome.runtime.lastError.message);
 			return;
 		}
 		
@@ -138,4 +105,60 @@ chrome.webNavigation.onCompleted.addListener(async function (details) {
 		console.error(e);
 		return;
 	}
+}
+
+const menu = chrome.contextMenus.create({
+	id: 'leonardo',
+    title: 'Leonardo Mod By EgorBeLike', 
+    contexts: ['all']
 });
+
+chrome.contextMenus.create({
+    id: 'leonardo-website', 
+    title: 'Открыть GitHub',
+    parentId: menu
+});
+
+chrome.contextMenus.create({
+    id: 'inject', 
+    title: 'Включить Leonardo на этой странице принудительно',
+    parentId: menu
+});
+
+/*chrome.contextMenus.create({
+    id: 'leonardo-vk', 
+    title: 'Открыть нашу группу ВКонтакте',
+    parentId: menu
+});
+
+chrome.contextMenus.create({
+    id: 'leonardo-telegram', 
+    title: 'Открыть наш Telegram',
+    parentId: menu
+});*/
+
+chrome.contextMenus.onClicked.addListener(async (menu) => {
+    if (menu.menuItemId == 'leonardo' || menu.menuItemId == 'leonardo-website') {
+        await chrome.tabs.create({ url: 'https://github.com/EgorBeLike/Leonardo-Mod' });
+    } else if (menu.menuItemId == 'leonardo-vk') {
+        await chrome.tabs.create({ url: 'https://vk.com/crashoffnet' });
+    } else if (menu.menuItemId == 'leonardo-telegram') {
+        await chrome.tabs.create({ url: 'https://t.me/crashoffnet' });
+    } else if (menu.menuItemId == 'inject') {
+		chrome.tabs.query({currentWindow: true, active: true, lastFocusedWindow: true }, function(tabs){
+			if(chrome.runtime.lastError){
+				console.error("Inject error (" + details.url + " ; " + details.tabId + "): " + chrome.runtime.lastError.message);
+				alert("Inject error (" + details.url + " ; " + details.tabId + "): " + chrome.runtime.lastError.message);
+				return;
+			}
+			await inject({
+				url: tabs[0].url,
+				tabId: tabs[0].url
+			}, true);
+		});
+    }
+});
+
+const now = () => Math.floor(Date.now() / 1000).toString();
+
+chrome.webNavigation.onCompleted.addListener(inject);
