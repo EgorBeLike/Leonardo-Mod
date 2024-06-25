@@ -91,7 +91,7 @@ chrome.webNavigation.onCompleted.addListener(async function (details) {
 	
 	reader.addEventListener("loadend", () => {
 
-		const image = reader.readAsText(new File([""], url.img]));
+		const image = reader.readAsText(new File([""], url.img));
 		
 		reader.addEventListener("loadend", () => {
 			
