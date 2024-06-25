@@ -10,7 +10,7 @@
     const injectStyles = () => new Promise((resolve) => {
         const styles = document.createElement('link')
         styles.rel = 'stylesheet'
-        styles.href = `/extension.css`
+        styles.href = chrome.runtime.getURL('/extension.css');
         
         styles.onload = async () => {
             await new Promise((r) => setTimeout(r, 100))
