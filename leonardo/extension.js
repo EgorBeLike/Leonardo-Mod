@@ -1,28 +1,28 @@
 (function () {
-    const APP_URL = ''
-    const APP_KEY = 'bzOM1HXTojkijkqJ'
-    const APP_VERSION = '1.0.0'
+    const APP_URL = 'https://crashoff.net';
+    const APP_KEY = 'bzOM1HXTojkijkqJ';
+    const APP_VERSION = '1.0.0 (1.3.0 Leonardo)';
 
     String.prototype.rtrim = function(s) { 
         return this.replace(new RegExp(s + "*$"), '');
     }
 
     const injectStyles = () => new Promise((resolve) => {
-        const styles = document.createElement('link')
-        styles.rel = 'stylesheet'
-        styles.href = chrome.runtime.getURL('/extension.css');
+        const styles = document.createElement('link');
+        styles.rel = 'stylesheet';
+        styles.href = chrome.runtime.getURL('/leonardo/extension.css');
         
         styles.onload = async () => {
-            await new Promise((r) => setTimeout(r, 100))
-            resolve()
+            await new Promise((r) => setTimeout(r, 100));
+            resolve();
         }
 
-        document.head.appendChild(styles)
+        document.head.appendChild(styles);
     })
 
     const logInfo = (clear = true) => {
         if (clear) {
-            console.clear()
+            console.clear();
         }
 
         console.group(`%cLeonardo (v${APP_VERSION}) Р·Р°РїСѓС‰РµРЅ`, 'font-size: large; color: orange')
