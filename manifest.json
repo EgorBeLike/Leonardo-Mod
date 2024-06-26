@@ -23,13 +23,6 @@
 		"tabs",
 		"activeTab"
 	],
-	//"declarative_net_request" : {
-	//	"rule_resources" : [{
-	//		"id": "modify_header",
-	//		"enabled": true,
-	//		"path": "modify_header.json"
-	//	}]
-	//},
 	"background": {
 		"service_worker": "/background.js"
 	},
